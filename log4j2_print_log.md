@@ -134,7 +134,7 @@ public class LoggingTest
   * logback vs log4j2
     * Apache Log4j2
       * It is the fastest and most advanced of the three frameworks.
-      * It allows lazy evaluation of log statements based on lambda expressions.
-      * It offers asynchronous loggers for low-latency systems.
+      * It allows lazy evaluation of log statements based on lambda expressions.(자바8이 람다식에서 로그메시지를 래핑하도록 하는 API제공)
+      * It offers asynchronous loggers for low-latency systems.(비동기: 응답을 기다려야 하는 일이 있을 때 기다리지 않고 바로 다른 작업)
       * It provides a garbage-free mode to avoid any latency caused by garbage collector operations.
 
