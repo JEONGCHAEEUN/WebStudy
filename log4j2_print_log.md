@@ -48,6 +48,7 @@
 		</dependency>
     
 * 2) Change resources's xml file to 'log4j2.xml'
+
 ~~~
 <!-- root level = "info" -->
 <?xml version="1.0" encoding="UTF-8"?>
@@ -96,6 +97,7 @@
   * %msg(%message/%m) : 로그메시지
   * %n : new line
   * %highlight : 로그레벨에 따른 색을 줌 
+
 
 * 3) Test in java file
 
