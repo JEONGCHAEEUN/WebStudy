@@ -64,6 +64,9 @@
     
     * 이 문제점 중 몇가지는 XML로 해결 가능하다.
     
+  ## STS tool에서 프로퍼티  
+    
+    
   # Conclusion
   
   * java.util.Properties 클래스를 이용해서 설정파일로부터 프로퍼티를 쉽게 읽어오는 법을 배웠다.
