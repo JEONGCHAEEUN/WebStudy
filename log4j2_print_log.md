@@ -131,6 +131,54 @@ public class LoggingTest
   
   ![image](https://user-images.githubusercontent.com/32332719/55716096-15f84400-5a31-11e9-8d2c-e977addbb236.png)
   
+  # # #
+  * Appender는 로그메세지가 출력될 대상을 결정한다.
+   * ConsoleAppender, FileAppender, RollingFileAppender, SMTPAppender, DBAppender 등이 있다.
+*  + 콘솔에 말고 파일로 출력해보기
+  ~~~
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Configuration status="warn" >
+    <Appenders>
+        <File name="FILE" fileName="./logs/file/tt.Log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <logger name = "dk.gaia.web'.egovframework" level = "debug" additivity="false">
+        	<AppenderRef ref="file"/>
+        </logger>
+        <Root level="trace">
+        	<AppenderRef ref="file"/>
+        </Root>
+    </Loggers>
+  </Configuration>
+  ~~~
+* Appenders를 File 로 설정해주고 출력할 파일의 경로를 지정해주면 그 파일을 열어서 출력결과를 확인할 수 있다.
+
+* + 시간과 옵션들을 조정하여 레이아웃 변경해보기
+~~~
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" >
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{default} [%t] %-5level %highlight{%p} %style{%logger}{bright, red} %C{1.}  - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <logger name = "dk.gaia.web'.egovframework" level = "debug" additivity="false">
+        	<AppenderRef ref="STDOUT"/>
+        </logger>
+        <Root level="trace">
+        	<AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+</Configuration>
+~~~
+ * <Appenders>의 <PatternLayout>부분의 속성을 바꿔주면 출력 양식이나 색 등을 바꿀 수 있다.
+
+![image](https://user-images.githubusercontent.com/32332719/55856835-7a88df80-5ba6-11e9-8a43-bc10a84b2d8e.png)
+
+	
   ###
   # Conclusion
   * logback vs log4j2
