@@ -4,6 +4,7 @@
   * key와 value를 사용한다.
   
   ## 설정시스템을 왜?
+  
     * 웹서버 개발시 몇 번 포트를 사용할지, 루트는 어느 디렉토리를 사용할지, 기본 문서를 index.html로 할지, index.htm으로 할지 등등
     * 직접 프로그램 코드에 삽입하면 쉽긴 하지만
     * 설정정보를 바꾸려면 소스를 재컴파일 해야하고, 
@@ -14,6 +15,7 @@
     * java.util.Properties 클래스를 사용해 설정파일로부터 설정정보를 읽어오는 클래스인 Configuration클래스를 작성한다.
     
   ## Properties 클래스 
+  
     * 프로퍼티의 지속적인 집합을 나타낸다
     * 프로퍼티의 목록을 스트림으로 저장하거나 스트림으로부터 읽어올 수 있다.
     * java.util.Hashtable클래스를 상속하고 있어서 프로퍼티는 <키, 값>의 형태로 저장된다.
@@ -26,6 +28,7 @@
         
     
   ## 설정 파일의 형태
+  
    * Configuration 클래스가 인식할 수 있는 설정파일의 형태
    
     -------------
@@ -50,6 +53,7 @@
     * Configuration클래스는 String, int, double, boolean 같은 타입을 처리할 수 있어야함.
     
     # Config Interface, AbstractConfiguration Class
+    
     ![image](https://user-images.githubusercontent.com/32332719/55857981-79a57d00-5ba9-11e9-822e-565d952129cf.png)
 
       * Configuration 클래스는 단지 로컬에 있는 파일로부터 프로퍼티를 읽어온다.
@@ -57,6 +61,7 @@
       
       
   ## Configuration 클래스의 문제점
+  
     * Configuration 클래스의 인스턴스를 생성할 때 마다 매번 설정파일을 읽어온다.
     * 여러 파일로부터 설정정보를 읽어올 경우 서로 다른 파일에 있는 프로퍼티의 키 값이 겹치지 않도록 해야한다.
     * 설정파일만으로는 각 프로퍼티간의 관계를 알 수 없어서 프로퍼티간의 관계를 명시적으로 표시할 수 있으면 설정파일을 관리하는게 수월해질 것이다.
@@ -65,12 +70,14 @@
     * 이 문제점 중 몇가지는 XML로 해결 가능하다.
     
   ## STS tool에서 프로퍼티  
+  
     * src/main/java 에 com.edu.exam01이라는 패키지를 하나 생성했다.
     * 그 패키지에 AdminConnection.java 파일과 Main.java 파일을 각각 생성했다.
     * src/main/resources 에 admin.properties 파일과 applicationCTX.xml파일을 생성했다.
     * properties 파일은 classpath를 통해 이용하기 위해 resources 밑에 생성을 했다.
     
     ### admin.properties
+    
     ~~~
     admin.id = jeong 
     admin.pwd = 12341234
@@ -79,6 +86,7 @@
     * 간단하게 admin의 id에 jeong을 저장하고, admin의 pwd에 12341234를 저장했다.
     
     ### applicationCTX.xml
+    
     ~~~
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -101,6 +109,7 @@
     ~~~
     
     ### AdminConnection.java
+    
     ~~~
     package com.edu.exam01;
  
@@ -143,6 +152,7 @@
 
     }
     ~~~
+    
     * xml파일에서 <beans>에 property-placeholder를 선언해서 ${}로 property place holder를 만들고, 프로퍼티 파일을 읽어서 value를 바꿔치기함
     * ${} 방식의 단점으로는 프로퍼티 파일의 키 값에 ${prefix}, suffix를 붙여서 find-and-replace방식으로 동작한다.
     * - 키값에 오타가 있거나 제대로 안넣었으면 ${}가 그대로 남는다.
@@ -151,6 +161,7 @@
     * admin.properties파일을 get, set 해준다.
     
     ### Main.java
+    
     ~~~
     package com.edu.exam01;
 
@@ -171,6 +182,7 @@
         }
     }
     ~~~
+    
     ![image](https://user-images.githubusercontent.com/32332719/55941552-6368f100-5c7d-11e9-9a40-193bfd54fc1d.png)
 
       * GenericXmlApplicationContext클래스 : XML로부터 객체설정 정보를 읽어와서 객체생성과 초기화를 수행한다.
