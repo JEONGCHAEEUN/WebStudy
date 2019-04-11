@@ -65,8 +65,120 @@
     * 이 문제점 중 몇가지는 XML로 해결 가능하다.
     
   ## STS tool에서 프로퍼티  
+    * src/main/java 에 com.edu.exam01이라는 패키지를 하나 생성했다.
+    * 그 패키지에 AdminConnection.java 파일과 Main.java 파일을 각각 생성했다.
+    * src/main/resources 에 admin.properties 파일과 applicationCTX.xml파일을 생성했다.
+    * properties 파일은 classpath를 통해 이용하기 위해 resources 밑에 생성을 했다.
+    
+    ### admin.properties
+    ~~~
+    admin.id = jeong 
+    admin.pwd = 12341234
+    ~~~
+    
+    * 간단하게 admin의 id에 jeong을 저장하고, admin의 pwd에 12341234를 저장했다.
+    
+    ### applicationCTX.xml
+    ~~~
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-           beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <context:property-placeholder location="classpath:admin.properties"/>
+    
+    <bean id="adminConnection" class="com.edu.exam01.AdminConnection">
+        <property name="adminId">
+            <value>${admin.id}</value>
+        </property>
+        <property name="adminPwd">
+            <value>${admin.pwd}</value>
+        </property>
+    </bean>
+ 
+    </beans>
+    ~~~
+    
+    ### AdminConnection.java
+    ~~~
+    package com.edu.exam01;
+ 
+    public class AdminConnection {
+
+        private String adminId;
+        private String adminPwd;
+
+        // constructor
+        public AdminConnection() {
+
+        }
+
+        public AdminConnection(String adminId, String adminPwd) {
+            this.adminId = adminId;
+            this.adminPwd = adminPwd;
+        }
+
+        // get set method
+        public String getAdminId() {
+            return adminId;
+        }
+
+        public void setAdminId(String adminId) {
+            this.adminId = adminId;
+        }
+
+        public String getAdminPwd() {
+            return adminPwd;
+        }
+
+        public void setAdminPwd(String adminPwd) {
+            this.adminPwd = adminPwd;
+        }
+
+        @Override
+        public String toString() {
+            return "Property check// [adminId=" + adminId + ", adminPwd=" + adminPwd + "]";
+        }
+
+    }
+    ~~~
+    * xml파일에서 <beans>에 property-placeholder를 선언해서 ${}로 property place holder를 만들고, 프로퍼티 파일을 읽어서 value를 바꿔치기함
+    * ${} 방식의 단점으로는 프로퍼티 파일의 키 값에 ${prefix}, suffix를 붙여서 find-and-replace방식으로 동작한다.
+    * - 키값에 오타가 있거나 제대로 안넣었으면 ${}가 그대로 남는다.
     
     
+    * admin.properties파일을 get, set 해준다.
+    
+    ### Main.java
+    ~~~
+    package com.edu.exam01;
+
+    import org.springframework.context.support.GenericXmlApplicationContext;
+
+    public class Main {
+
+        public static void main(String[] args) {
+
+            GenericXmlApplicationContext gxac = new GenericXmlApplicationContext();
+            gxac.load("classpath:applicationCTX.xml");
+            gxac.refresh();
+
+            AdminConnection adminConnection = gxac.getBean("adminConnection", AdminConnection.class);
+            System.out.println(adminConnection.toString());
+
+            gxac.close();
+        }
+    }
+    ~~~
+    ![image](https://user-images.githubusercontent.com/32332719/55941552-6368f100-5c7d-11e9-9a40-193bfd54fc1d.png)
+
+      * GenericXmlApplicationContext클래스 : XML로부터 객체설정 정보를 읽어와서 객체생성과 초기화를 수행한다.
+      * BeanFactory 인터페이스의 먼 자손이다.
+      * getBean() : 생성된 객체를 검색하는 함수(BeanFactory에 정의돼있음)
+
+    #### 근데 이렇게 파일을 4개씩이나 안만들고 바로 properties파일에서 Main으로 읽어올 수 있다고 하는데 못해봤다...
+
   # Conclusion
   
   * java.util.Properties 클래스를 이용해서 설정파일로부터 프로퍼티를 쉽게 읽어오는 법을 배웠다.
