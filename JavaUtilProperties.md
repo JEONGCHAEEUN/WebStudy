@@ -143,8 +143,8 @@
        public String toString() {
            return "Property check// [adminId=" + adminId + ", adminPwd=" + adminPwd + "]";
        }
-    }
-    ~~~
+   }
+   ~~~
     
    * xml파일에서 <beans>에 property-placeholder를 선언해서 ${}로 property place holder를 만들고, 프로퍼티 파일을 읽어서 value를 바꿔치기함
    * ${} 방식의 단점으로는 프로퍼티 파일의 키 값에 ${prefix}, suffix를 붙여서 find-and-replace방식으로 동작한다.
@@ -155,25 +155,25 @@
     
    ### Main.java
     
-   ~~~
-   package com.edu.exam01;
+    ~~~
+    package com.edu.exam01;
 
-   import org.springframework.context.support.GenericXmlApplicationContext;
+    import org.springframework.context.support.GenericXmlApplicationContext;
 
-   public class Main {
+    public class Main {
 
-       public static void main(String[] args) {
+        public static void main(String[] args) {
 
-           GenericXmlApplicationContext gxac = new GenericXmlApplicationContext();
-           gxac.load("classpath:applicationCTX.xml");
+            GenericXmlApplicationContext gxac = new GenericXmlApplicationContext();
+            gxac.load("classpath:applicationCTX.xml");
             gxac.refresh();
 
-           AdminConnection adminConnection = gxac.getBean("adminConnection", AdminConnection.class);
-           System.out.println(adminConnection.toString());
+            AdminConnection adminConnection = gxac.getBean("adminConnection", AdminConnection.class);
+            System.out.println(adminConnection.toString());
             gxac.close();
-       }
-   }
-   ~~~
+        }
+    }
+    ~~~
     
    ![image](https://user-images.githubusercontent.com/32332719/55941552-6368f100-5c7d-11e9-9a40-193bfd54fc1d.png)
 
